@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* base styles */
+
+body {
+  @apply text-gray-800
+}
+h1, h2 {
+  @apply font-medium text-lg;
+}
+main {
+  @apply max-w-full mx-auto;
+}
