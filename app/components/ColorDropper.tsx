@@ -5,7 +5,6 @@ import {
   useRef,
   Fragment
 } from "react";
-import Image from "next/image";
 
 // components
 import Canvas from "./Canvas";
