@@ -77,8 +77,8 @@ const Canvas: React.FC<CanvasProps> = ({
 
       const sourceX = Math.max(0, x - dropperSize / 2 / zoomFactor);
       const sourceY = Math.max(0, y - dropperSize / 2 / zoomFactor);
-      const sourceWidth = dropperSize / zoomFactor;
-      const sourceHeight = dropperSize / zoomFactor;
+      const sourceWidth = Math.min(canvas.width - sourceX, dropperSize / zoomFactor);
+      const sourceHeight = Math.min(canvas.height - sourceY, dropperSize / zoomFactor);
 
       ctxDropper.drawImage(canvas, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, dropperSize, dropperSize);
     }
