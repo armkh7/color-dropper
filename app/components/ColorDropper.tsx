@@ -10,6 +10,7 @@ import {
 import Canvas from "./Canvas";
 import ColorPickerInfo from "./ColorPickerInfo";
 import ColorPicker from "./ColorPicker";
+import ImageUploadButton from "./ImageUploadButton";
 
 export default function ColorDropper() {
 
@@ -19,14 +20,24 @@ export default function ColorDropper() {
   // states
   const [isColorPickerActive, setIsColorPickerActive] = useState(false);
   const [detectedColor, setDetectedColor] = useState('');
+  const [imageSrc, setImageSrc] = useState('/island.jpg')
 
+  // handle click on color picker icon
   const handleColorPickerClick = () => {
     setIsColorPickerActive(!isColorPickerActive)
     document.body.style.cursor = 'crosshair'
   }
 
+  // handle iamge change
+  const handleImageChange = (file: File) => {
+    const imageUrl = URL.createObjectURL(file);
+    setImageSrc(imageUrl);
+    setDetectedColor('')
+  }
+
   return (
     <Fragment>
+      <ImageUploadButton onImageChange={handleImageChange} />
       <ColorPickerInfo
         detectedColor={detectedColor}
         handleColorPickerClick={handleColorPickerClick}
@@ -36,6 +47,7 @@ export default function ColorDropper() {
           canvasRef={canvasRef}
           canvasDropperRef={canvasDropperRef}
           isColorPickerActive={isColorPickerActive}
+          imageSrc={imageSrc}
           setIsColorPickerActive={setIsColorPickerActive}
           setDetectedColor={setDetectedColor}
         />

@@ -7,6 +7,7 @@ interface CanvasProps {
   canvasRef: React.RefObject<HTMLCanvasElement>;
   canvasDropperRef: React.RefObject<HTMLCanvasElement>;
   isColorPickerActive: boolean;
+  imageSrc: string;
   setIsColorPickerActive: React.Dispatch<React.SetStateAction<boolean>>;
   setDetectedColor: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -15,6 +16,7 @@ const Canvas: React.FC<CanvasProps> = ({
   canvasRef,
   canvasDropperRef,
   isColorPickerActive,
+  imageSrc,
   setIsColorPickerActive,
   setDetectedColor
 }) => {
@@ -30,7 +32,7 @@ const Canvas: React.FC<CanvasProps> = ({
     if (!canvas || !canvasDropper || !ctx || !ctxDropper) return;
 
     const canvasImage = new Image();
-    canvasImage.src = '/island.jpg';
+    canvasImage.src = imageSrc;
 
     // draw canvas image
     canvasImage.onload = () => {
@@ -116,7 +118,7 @@ const Canvas: React.FC<CanvasProps> = ({
       canvas.removeEventListener('click', handleClickOnCanvas);
     };
 
-  }, [canvasRef, canvasDropperRef, isColorPickerActive])
+  }, [imageSrc, canvasRef, canvasDropperRef, isColorPickerActive])
 
   return <canvas ref={canvasRef} />
 }
