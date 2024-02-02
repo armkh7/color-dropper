@@ -81,6 +81,37 @@ const Canvas: React.FC<CanvasProps> = ({
       const sourceHeight = Math.min(canvas.height - sourceY, dropperSize / zoomFactor);
 
       ctxDropper.drawImage(canvas, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, dropperSize, dropperSize);
+
+      // get the color information from the pixel
+      const pixel = ctxDropper.getImageData(dropperSize / 2, dropperSize / 2, 1, 1).data;
+      const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
+
+      // display hex color string on the ctxDropper with white background
+      const textY = dropperSize - 30;
+      const textPadding = 5;
+      const textWidth = ctxDropper.measureText(hexColor).width + 2 * textPadding;
+      const borderRadius = 10;
+      const rectHeight = 20;
+
+      const textX = (ctxDropper.canvas.width - textWidth) / 2
+
+      ctxDropper.fillStyle = "#fff";
+      ctxDropper.beginPath();
+      ctxDropper.moveTo(textX - textPadding + borderRadius, textY - rectHeight / 2);
+      ctxDropper.lineTo(textX + textWidth + textPadding - borderRadius, textY - rectHeight / 2);
+      ctxDropper.arcTo(textX + textWidth + textPadding, textY - rectHeight / 2, textX + textWidth + textPadding, textY, borderRadius);
+      ctxDropper.lineTo(textX + textWidth + textPadding, textY + rectHeight / 2 - borderRadius);
+      ctxDropper.arcTo(textX + textWidth + textPadding, textY + rectHeight / 2, textX + textWidth + textPadding - borderRadius, textY + rectHeight / 2, borderRadius);
+      ctxDropper.lineTo(textX - textPadding + borderRadius, textY + rectHeight / 2);
+      ctxDropper.arcTo(textX - textPadding, textY + rectHeight / 2, textX - textPadding, textY + rectHeight / 2 - borderRadius, borderRadius);
+      ctxDropper.lineTo(textX - textPadding, textY - rectHeight / 2 + borderRadius);
+      ctxDropper.arcTo(textX - textPadding, textY - rectHeight / 2, textX - textPadding + borderRadius, textY - rectHeight / 2, borderRadius);
+      ctxDropper.closePath();
+      ctxDropper.fill();
+
+      ctxDropper.font = "14px Arial";
+      ctxDropper.fillStyle = "#000"; // Set color for the text
+      ctxDropper.fillText(hexColor, textX + textPadding, textY + textPadding);
     }
 
     // handle click on canvas
