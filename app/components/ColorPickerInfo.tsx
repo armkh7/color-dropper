@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Image from "next/image";
 
 interface ColorPickerInfoProps {
@@ -11,31 +11,26 @@ const ColorPickerInfo: React.FC<ColorPickerInfoProps> = ({
   handleColorPickerClick
 }) => {
   return (
-    <div className="flex items-center container max-w-5xl mx-auto py-4">
-      <div className="mr-auto flex">
-        <Image
-          src="/iconColorPicker.svg"
-          width={24}
-          height={24}
-          alt="Color picker icon"
-          className="cursor-pointer"
-          onClick={() => handleColorPickerClick()}
-        />
-      </div>
-      <div className="mx-auto">
-        {
-          detectedColor && (
-            <div className="flex items-center">
-              <p className="mr-2 my-0 text-gray-800">{detectedColor}</p>
-              <div
-                className={`w-6 h-6 border border-gray-400 rounded-full`}
-                style={{ backgroundColor: detectedColor }}
-              ></div>
-            </div>
-          )
-        }
-      </div>
-      <div className="ml-auto"></div>
+    <div className="flex relative justify-center items-center container max-w-5xl mx-auto py-4 min-h-[60px]">
+      <Image
+        src="/iconColorPicker.svg"
+        width={24}
+        height={24}
+        alt="Color picker icon"
+        className="absolute left-0 cursor-pointer"
+        onClick={() => handleColorPickerClick()}
+      />
+      {
+        detectedColor && (
+          <Fragment>
+            <p className="mr-2 my-0 text-gray-800">{detectedColor}</p>
+            <div
+              className={`w-6 h-6 border border-gray-400 rounded-full`}
+              style={{ backgroundColor: detectedColor }}
+            ></div>
+          </Fragment>
+        )
+      }
     </div>
   )
 }
